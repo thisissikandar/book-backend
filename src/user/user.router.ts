@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register } from "../controllers/user.controller";
+import { register } from "./user.controller";
 
 
 

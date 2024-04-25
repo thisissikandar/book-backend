@@ -1,5 +1,4 @@
 import express from "express";
-import createHttpError, { HttpError } from "http-errors";
 import globalErrorHandle from "./middlewares/globalErrorHandler";
 
 const app = express();
@@ -10,7 +9,7 @@ app.get("/", (req, res) => {
   // throw error;
   res.json({ messagee: "hello world server is listening" });
 });
-import userRouter from "./router/user.router";
+import userRouter from "./user/user.router";
 
 app.use("/api/v1/users", userRouter);
 
