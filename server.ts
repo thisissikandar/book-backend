@@ -8,7 +8,7 @@ const startServer = async()=>{
     const port = config.port || 3000;
 
     app.listen(port, ()=>{
-        console.log(`Listening on ${port}`)
+        console.log(`App Running on port :: http://localhost:${port}`)
     })
 }
 startServer()
