@@ -14,9 +14,11 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
   const user = await userModel.findOne({ email });
   if (user) {
     const error = createHttpError(500, "User Already Exists");
+  
   }
-  const hasedPassword =bcrypt.hash(password,10)
-  res.json({ message: "success " });
+  const hasedPassword = await bcrypt.hash(password,10)
+  const newUser = await userModel.create(name,email,password:hasedPassword)
+  res.json({ id: "success " });
 };
 
 export { register };
