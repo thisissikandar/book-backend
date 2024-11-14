@@ -1,7 +1,14 @@
 import express from "express";
+import cors from "cors";
 import globalErrorHandle from "./middlewares/globalErrorHandler";
 
 const app = express();
+app.use(
+  cors({
+    origin: config.corsOrigins === "*" ? "*" : config.corsOrigins?.split(","),
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.json({ limit: "16kb" }));
 app.get("/", (req, res) => {
@@ -11,6 +18,7 @@ app.get("/", (req, res) => {
 });
 import userRouter from "./user/user.router";
 import bookRouter from "./book/book.router";
+import { config } from "./config/config";
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/books", bookRouter);
