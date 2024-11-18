@@ -1,15 +1,17 @@
 import { Router } from "express";
-import multer from "multer";
-import path from "path";
-import { createBook, deleteSingleBooks, getAllBooks, getSingleBooks, updateBook } from "./book.controller";
+
+import {
+  createBook,
+  deleteSingleBooks,
+  getAllBooks,
+  getSingleBooks,
+  updateBook,
+} from "./book.controller";
 import { verifyJWT } from "../middlewares/authMiddleware";
+import { upload } from "../middlewares/multerMiddleware";
 
 const bookRouter = Router();
 
-const upload = multer({
-  dest: path.join(__dirname, "../../public/data/uploads"),
-  limits: { fileSize: 3e7 },
-});
 bookRouter.route("/").post(
   verifyJWT,
   upload.fields([
@@ -28,6 +30,6 @@ bookRouter.route("/:bookId").patch(
 );
 bookRouter.route("/").get(getAllBooks);
 bookRouter.route("/:bookId").get(getSingleBooks);
-bookRouter.route("/:bookId").delete(verifyJWT,deleteSingleBooks);
+bookRouter.route("/:bookId").delete(verifyJWT, deleteSingleBooks);
 
 export default bookRouter;

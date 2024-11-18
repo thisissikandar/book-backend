@@ -3,10 +3,10 @@ import { User } from "../user/user.type";
 export interface Book {
   _id: string;
   title: string;
-  author: User;
+  owner:User
+  author: string;
   genre: string;
+  description:string
   coverImage: string;
   file: string;
-  createdAt: Date;
-  updatedAt: Date;
 }

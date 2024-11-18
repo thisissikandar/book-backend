@@ -7,9 +7,21 @@ const bookSchema = new Schema<Book>(
       type: String,
       required: true,
     },
-    author: {
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+    author: {
+      type: String,
+      required: true,
+    },
+    genre: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
       required: true,
     },
     coverImage: {
@@ -20,10 +32,7 @@ const bookSchema = new Schema<Book>(
       type: String,
       required: true,
     },
-    genre: {
-      type: String,
-      required: true,
-    },
+  
   },
   { timestamps: true }
 );

@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import globalErrorHandle from "./middlewares/globalErrorHandler";
+import { config } from "./config/config";
+
 
 const app = express();
 app.use(
@@ -18,7 +20,6 @@ app.get("/", (req, res) => {
 });
 import userRouter from "./user/user.router";
 import bookRouter from "./book/book.router";
-import { config } from "./config/config";
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/books", bookRouter);
