@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import createHttpError from "http-errors";
 
-import bookModel from "./book.model";
-import { CustomRequest } from "../middlewares/authMiddleware";
+import { CustomRequest } from "../../middlewares/authMiddleware";
 import { deleteOnCloudinary, uploadOnCloudinary } from "../../utils/cloudinary";
+import bookModel from "../../models/books/book.model";
 
 const createBook = async (
   req: CustomRequest,
@@ -142,13 +142,12 @@ const deleteSingleBooks = async (
   const pdfFilePublicId =
     pdfFileString.at(-2) + "/" + pdfFileString.at(-1)?.split(".").at(-2);
 
- await deleteOnCloudinary(coverImagePublicId);
- await deleteOnCloudinary(pdfFilePublicId);
-
+  await deleteOnCloudinary(coverImagePublicId);
+  await deleteOnCloudinary(pdfFilePublicId);
 
   const deleted = await bookModel.deleteOne({ _id: bookId });
   console.log(deleted);
-  
+
   return res.send({ message: `Successfully deleted ${singleBook.title}` });
 };
 

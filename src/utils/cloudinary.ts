@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 
-import { config } from "../src/config/config";
+import { config } from "../config/config";
 
 cloudinary.config({
   cloud_name: config.cloudinaryCloudName,
