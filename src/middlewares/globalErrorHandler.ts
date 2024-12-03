@@ -19,8 +19,8 @@ const globalErrorHandle = (
     const message = error.message || "Something went wrong";
     error = new ApiErrorHandler(
       statusCode,
-      error?.errors || [],
       message,
+      error?.errors || [],
       err.stack
     );
   }

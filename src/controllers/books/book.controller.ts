@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import createHttpError from "http-errors";
 
 import { CustomRequest } from "../../middlewares/authMiddleware";
 import { deleteOnCloudinary, uploadOnCloudinary } from "../../utils/cloudinary";
 import bookModel from "../../models/books/book.model";
+import { ApiErrorHandler } from "../../utils/ApiErrorHandler";
+import { asyncHandler } from "../../utils/asyncHandler";
 
-const createBook = async (
+const createBook = asyncHandler(async (
   req: CustomRequest,
   res: Response,
   next: NextFunction
@@ -36,9 +37,9 @@ const createBook = async (
   });
 
   return res.send(newBook);
-};
+});
 
-const updateBook = async (
+const updateBook = asyncHandler(async (
   req: CustomRequest,
   res: Response,
   next: NextFunction
@@ -47,12 +48,13 @@ const updateBook = async (
   const bookId = req.params.bookId;
   const book = await bookModel.findOne({ _id: bookId });
   if (!book) {
-    return next(createHttpError(404, "book Not found"));
+    throw new ApiErrorHandler(404, "book Not found");
   }
 
   if (String(book.owner._id) !== String(req.user._id)) {
-    return next(
-      createHttpError(403, "Unauthorized, You can not update others book")
+    throw new ApiErrorHandler(
+      403,
+      "Unauthorized, You can not update others book"
     );
   }
 
@@ -92,18 +94,18 @@ const updateBook = async (
     }
   );
   return res.send(updatedBook);
-};
+});
 
-const getAllBooks = async (req: Request, res: Response, next: NextFunction) => {
+const getAllBooks = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   const allBook = await bookModel.find();
   if (!allBook) {
-    return next(createHttpError(404, "book Not found"));
+    throw new ApiErrorHandler(404, "book Not found");
   }
 
   return res.send(allBook);
-};
+});
 
-const getSingleBooks = async (
+const getSingleBooks = asyncHandler(async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -111,13 +113,13 @@ const getSingleBooks = async (
   const bookId = req.params.bookId;
   const singleBook = await bookModel.findOne({ _id: bookId });
   if (!singleBook) {
-    return next(createHttpError(404, "book Not found"));
+    throw new ApiErrorHandler(404, "book Not found");
   }
 
   return res.json(singleBook);
-};
+});
 
-const deleteSingleBooks = async (
+const deleteSingleBooks = asyncHandler(async (
   req: CustomRequest,
   res: Response,
   next: NextFunction
@@ -125,12 +127,13 @@ const deleteSingleBooks = async (
   const bookId = req.params.bookId;
   const singleBook = await bookModel.findOne({ _id: bookId });
   if (!singleBook) {
-    return next(createHttpError(404, "book Not found"));
+    throw new ApiErrorHandler(404, "book Not found");
   }
 
   if (String(singleBook.owner?._id) !== String(req.user?._id)) {
-    return next(
-      createHttpError(403, "Unauthorized, You can not delete others book")
+    throw new ApiErrorHandler(
+      403,
+      "Unauthorized, You can not delete others book"
     );
   }
 
@@ -149,7 +152,7 @@ const deleteSingleBooks = async (
   console.log(deleted);
 
   return res.send({ message: `Successfully deleted ${singleBook.title}` });
-};
+});
 
 export {
   createBook,

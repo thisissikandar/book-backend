@@ -31,7 +31,7 @@ bookRouter.route("/:bookId").patch(
   ]),
   updateBook
 );
-bookRouter.route("/").get(getAllBooks);
+bookRouter.route("/").get(verifyJWT,getAllBooks);
 bookRouter.route("/:bookId").get(getSingleBooks);
 bookRouter
   .route("/:bookId")

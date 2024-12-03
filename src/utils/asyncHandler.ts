@@ -5,12 +5,14 @@ type RequestHandler = (
   res: Response,
   next: NextFunction
 ) => Promise<any>;
+
+
 export const asyncHandler =
   (requestHandler: RequestHandler) =>
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       return await requestHandler(req, res, next);
-    } catch (error) {
+    } catch (error:any) {
       next(error);
     }
   };
