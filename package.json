@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "tsc",
     "start": "node dist/server.js",
     "dev": "nodemon server.ts",
     "docker:publish": "docker build -t thisissikandar/book-backend:v2 --platform linux/amd64 . &&  docker push thisissikandar/book-backend:v2"
