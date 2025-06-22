@@ -37,8 +37,7 @@ app.use(express.json({ limit: "16kb" }));
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  // const error = createHttpError(400, "something went wrong");
-  // throw error;
+  
   res.json({ messagee: "hello world server is listening" });
 });
 

@@ -9,14 +9,17 @@ const connectDb = async () => {
     mongoose.connection.on("error", (err) => {
       console.log("Database error: " + err);
     });
-    const connectionInstance = await mongoose.connect (config.databaseUrl as string);
+    
+    const connectionInstance = await mongoose.connect(
+      config.databaseUrl as string,
+    );
     // connectionInstance.connection.on("connected", () => {
     //   console.log("Connected to database");
     // });
     // connectionInstance.connection.on("error", (err) => {
     //   console.log("Database error: " + err);
     // });
- 
+    // process.exit(1);
   } catch (error) {
     console.log(error);
     process.exit();
